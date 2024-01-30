@@ -21,7 +21,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .name("Good Customer")
                 .version(1)
                 .createdDate(LocalDateTime.now())
-                .lastModifiedDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
                 .build();
 
         Customer customer2 = Customer.builder()
@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .name("Average Customer")
                 .version(1)
                 .createdDate(LocalDateTime.now())
-                .lastModifiedDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
                 .build();
 
         Customer customer3 = Customer.builder()
@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .name("Bad Customer")
                 .version(1)
                 .createdDate(LocalDateTime.now())
-                .lastModifiedDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
                 .build();
 
         customerMap.put(customer1.getId(), customer1);
@@ -64,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .id(UUID.randomUUID())
                 .version(1)
                 .createdDate(LocalDateTime.now())
-                .lastModifiedDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
                 .name(customer.getName())
                 .build();
 

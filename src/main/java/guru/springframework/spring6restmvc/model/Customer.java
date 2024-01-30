@@ -13,5 +13,5 @@ public class Customer {
     private UUID id;
     private Integer version;
     private LocalDateTime createdDate;
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime updateDate;
 }
