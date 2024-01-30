@@ -40,7 +40,7 @@ class BeerControllerTest {
     }
 
     @Test
-    void testCreateNewBeer() throws JsonProcessingException, Exception {
+    void testCreateNewBeer() throws Exception {
         Beer beer = beerServiceImpl.listBeers().get(0);
         beer.setId(null);
         beer.setVersion(null);
