@@ -47,6 +47,26 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public void updateCustomerById(UUID customerId, Customer customer) {
+        Customer existing = customerMap.get(customerId);
+        existing.setVersion(existing.getVersion() + 1);
+        existing.setUpdateDate(LocalDateTime.now());
+        existing.setName(customer.getName());
+    }
+
+    @Override
+    public Customer saveNewCustomer(Customer customer) {
+        Customer savedCustomer = Customer.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .createdDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .name(customer.getName())
+                .build();
+        customerMap.put(savedCustomer.getId(), savedCustomer);
+        return savedCustomer;
+    }
+    @Override
     public List<Customer> listCustomers() {
         return new ArrayList<>(customerMap.values());
     }
@@ -55,21 +75,5 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer getCustomerById(UUID id) {
         log.debug("Get Customer by Id - in service. Id: " + id.toString());
         return customerMap.get(id);
-    }
-
-    @Override
-    public Customer saveNewCustomer(Customer customer) {
-
-        Customer savedCustomer = Customer.builder()
-                .id(UUID.randomUUID())
-                .version(1)
-                .createdDate(LocalDateTime.now())
-                .updateDate(LocalDateTime.now())
-                .name(customer.getName())
-                .build();
-
-        customerMap.put(savedCustomer.getId(), savedCustomer);
-
-        return savedCustomer;
     }
 }
