@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,12 +22,16 @@ public class BeerServiceJPA implements BeerService {
 
     @Override
     public List<BeerDTO> listBeers() {
-        return null;
+        return beerRepository.findAll().stream()
+                .map(beerMapper::beerToBeerDto)
+                .filter(Objects::nonNull)
+                .toList();
     }
 
     @Override
-    public BeerDTO getBeerById(UUID id) {
-        return null;
+    public Optional<BeerDTO> getBeerById(UUID id) {
+        return beerRepository.findById(id)
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
