@@ -33,6 +33,29 @@ class BeerControllerIT {
     @Rollback
     @Transactional
     @Test
+    void testPatchById() {
+        UUID updateBeerId = beerRepository.findAll().get(0).getId();
+        BeerDTO beerDTO = BeerDTO.builder()
+                .beerName("PATCHED")
+                .build();
+
+        ResponseEntity responseEntity = beerController.updateBeerPatchById(updateBeerId, beerDTO);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        Beer updatedBeer = beerRepository.findById(updateBeerId).orElseThrow(AssertionError::new);
+        assertThat(updatedBeer.getBeerName()).isEqualTo(beerDTO.getBeerName());
+    }
+
+    @Test
+    void testPatchByIdNotFound() {
+        assertThrowsExactly(NotFoundException.class, () ->
+                beerController.updateBeerPatchById(UUID.randomUUID(), BeerDTO.builder().build())
+        );
+    }
+
+    @Rollback
+    @Transactional
+    @Test
     void deleteById() {
         Beer beer = beerRepository.findAll().get(0);
 
@@ -60,8 +83,8 @@ class BeerControllerIT {
         beerDTO.setBeerName("UPDATED");
 
         ResponseEntity responseEntity = beerController.updateById(beer.getId(), beerDTO);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         Beer updatedBeer = beerRepository.findById(beer.getId()).orElseThrow(AssertionError::new);
         assertThat(updatedBeer.getBeerName()).isEqualTo(beerDTO.getBeerName());
     }
@@ -85,10 +108,8 @@ class BeerControllerIT {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getHeaders().getLocation()).isNotNull();
-
         String[] locationUUID = responseEntity.getHeaders().getLocation().getPath().split("/");
         UUID savedUUID = UUID.fromString(locationUUID[4]);
-
         assertThat(beerRepository.findById(savedUUID)).isNotEmpty();
     }
 
