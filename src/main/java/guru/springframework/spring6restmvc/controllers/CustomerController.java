@@ -24,36 +24,35 @@ public class CustomerController {
 
     @PatchMapping(CUSTOMER_PATH_ID)
     public ResponseEntity updateCustomerPatchById(@PathVariable("customerId") UUID customerId,
-                                             @RequestBody CustomerDTO customer) {
-
-        customerService.patchCustomerById(customerId, customer);
-
+                                             @RequestBody CustomerDTO customerDTO) {
+        if (customerService.patchCustomerById(customerId, customerDTO).isEmpty()) {
+            throw new NotFoundException();
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
     @DeleteMapping(CUSTOMER_PATH_ID)
     public ResponseEntity deleteCustomerById(@PathVariable("customerId") UUID customerId) {
-
-        customerService.deleteCustomerById(customerId);
-
+        if (!customerService.deleteCustomerById(customerId)) {
+            throw new NotFoundException();
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(CUSTOMER_PATH_ID)
     public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId,
-                                             @RequestBody CustomerDTO customer) {
-
-        customerService.updateCustomerById(customerId, customer);
-
+                                             @RequestBody CustomerDTO customerDTO) {
+        if (customerService.updateCustomerById(customerId, customerDTO).isEmpty()) {
+            throw new NotFoundException();
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(CUSTOMER_PATH)
-    public ResponseEntity handlePost(@RequestBody CustomerDTO customer) {
-
-        CustomerDTO savedCustomer = customerService.saveNewCustomer(customer);
+    public ResponseEntity handlePost(@RequestBody CustomerDTO customerDTO) {
+        CustomerDTO savedCustomer = customerService.saveNewCustomer(customerDTO);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", CUSTOMER_PATH + "/" + savedCustomer.getId().toString());
-
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
