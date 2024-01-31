@@ -19,7 +19,7 @@ public class BeerServiceImpl implements BeerService {
     public BeerServiceImpl() {
         this.beerMap = new HashMap<>();
 
-        BeerDTO beer1 =  BeerDTO.builder()
+        BeerDTO beer1 = BeerDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
                 .beerName("Galaxy Cat")
@@ -43,7 +43,7 @@ public class BeerServiceImpl implements BeerService {
                 .updateDate(LocalDateTime.now())
                 .build();
 
-        BeerDTO beer3 =  BeerDTO.builder()
+        BeerDTO beer3 = BeerDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
                 .beerName("Sunshine City")
