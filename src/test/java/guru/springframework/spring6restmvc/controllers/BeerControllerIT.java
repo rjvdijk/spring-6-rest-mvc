@@ -42,6 +42,13 @@ class BeerControllerIT {
         assertThat(beerRepository.findById(beer.getId())).isEmpty();
     }
 
+    @Test
+    void testDeleteByIdNotFound() {
+        assertThrowsExactly(NotFoundException.class, () ->
+                beerController.deleteById(UUID.randomUUID())
+        );
+    }
+
     @Rollback
     @Transactional
     @Test
