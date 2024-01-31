@@ -50,6 +50,15 @@ class BeerControllerIT {
     @Rollback
     @Transactional
     @Test
+    void testUpdateNotFound() {
+        assertThrowsExactly(NotFoundException.class, () ->
+                beerController.updateById(UUID.randomUUID(), BeerDTO.builder().build())
+        );
+    }
+
+    @Rollback
+    @Transactional
+    @Test
     void saveNewBeerTest() {
         BeerDTO beerDTO = BeerDTO.builder()
                 .beerName("New Beer")
