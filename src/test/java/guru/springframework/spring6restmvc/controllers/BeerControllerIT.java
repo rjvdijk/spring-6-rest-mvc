@@ -33,6 +33,18 @@ class BeerControllerIT {
     @Rollback
     @Transactional
     @Test
+    void deleteById() {
+        Beer beer = beerRepository.findAll().get(0);
+
+        ResponseEntity responseEntity = beerController.deleteById(beer.getId());
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+        assertThat(beerRepository.findById(beer.getId())).isEmpty();
+    }
+
+    @Rollback
+    @Transactional
+    @Test
     void updateExistingBeer() {
         Beer beer = beerRepository.findAll().get(0);
         BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
@@ -47,8 +59,6 @@ class BeerControllerIT {
         assertThat(updatedBeer.getBeerName()).isEqualTo(beerDTO.getBeerName());
     }
 
-    @Rollback
-    @Transactional
     @Test
     void testUpdateNotFound() {
         assertThrowsExactly(NotFoundException.class, () ->
