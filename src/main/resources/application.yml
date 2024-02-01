@@ -2,7 +2,9 @@ logging:
   level:
     guru.springframework: debug
 
-#spring:
+spring:
+  flyway:
+    enabled: false
 #  jpa:
 #    properties:
 #      jakarta:

@@ -18,6 +18,8 @@ spring:
         cacheServerConfiguration: true
         elideSetAutoCommits: true
         maintainTimeStats: false
+  flyway:
+    enabled: true
   jpa:
     database: mysql
     hibernate:
