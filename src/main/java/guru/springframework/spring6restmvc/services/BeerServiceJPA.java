@@ -89,7 +89,7 @@ public class BeerServiceJPA implements BeerService {
             if (beerDTO.getUpdateDate() != null) {
                 foundBeer.setUpdateDate(beerDTO.getUpdateDate());
             }
-            atomicReference.set(Optional.of(beerMapper.beerToBeerDto(foundBeer)));
+            atomicReference.set(Optional.of(beerMapper.beerToBeerDto(beerRepository.save(foundBeer))));
         }, () -> atomicReference.set(Optional.empty()));
         return atomicReference.get();
     }
