@@ -37,6 +37,7 @@ public class Beer {
     private String beerName;
 
     @NotNull
+    @Column(columnDefinition = "tinyint")
     private BeerStyle beerStyle;
 
     @NotNull
