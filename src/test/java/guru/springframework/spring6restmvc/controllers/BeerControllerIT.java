@@ -58,9 +58,26 @@ class BeerControllerIT {
     }
 
     @Test
+    void testListBeerByBeerNameAndBeerStyle() throws Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                        .queryParam("beerName", "IPA")
+                        .queryParam("beerStyle", "ALE"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(11)));
+    }
+
+    @Test
+    void testListBeerByBeerStyle() throws Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                    .queryParam("beerStyle", "ALE"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(400)));
+    }
+
+    @Test
     void testListBeersByName() throws Exception {
         mockMvc.perform(get(BeerController.BEER_PATH)
-                .queryParam("beerName", "IPA"))
+                    .queryParam("beerName", "IPA"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(336)));
     }
@@ -73,9 +90,9 @@ class BeerControllerIT {
         beerMap.put("beerName", "New Name 1234567890123456789012345678901234567890123456789012345678901234567890");
 
         MvcResult mvcResult = mockMvc.perform(patch(BeerController.BEER_PATH_ID, beer.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(beerMap)))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(beerMap)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.length()", is(1)))
                 .andReturn();
@@ -184,7 +201,7 @@ class BeerControllerIT {
 
     @Test
     void testListBeers() {
-        List<BeerDTO> dtos = beerController.listBeers(null);
+        List<BeerDTO> dtos = beerController.listBeers(null, null);
 
         assertThat(dtos).hasSize(2413);
     }
@@ -194,7 +211,7 @@ class BeerControllerIT {
     @Test
     void testListBeersEmptyList() {
         beerRepository.deleteAll();
-        List<BeerDTO> dtos = beerController.listBeers(null);
+        List<BeerDTO> dtos = beerController.listBeers(null, null);
 
         assertThat(dtos).isEmpty();
     }
