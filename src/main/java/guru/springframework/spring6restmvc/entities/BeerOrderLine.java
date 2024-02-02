@@ -27,14 +27,6 @@ public class BeerOrderLine {
     @Version
     private Long version;
 
-    @JdbcTypeCode(SqlTypes.CHAR)
-    @Column(length = 36, columnDefinition = "varchar(36)")
-    private UUID beerOrderId;
-
-    @JdbcTypeCode(SqlTypes.CHAR)
-    @Column(length = 36, columnDefinition = "varchar(36)")
-    private UUID beerId;
-
     private Integer orderQuantity;
     private Integer quantityAllocated;
 
@@ -46,4 +38,10 @@ public class BeerOrderLine {
     private LocalDateTime lastModifiedDate;
 
     public boolean isNew() { return this.id == null; }
+
+    @ManyToOne
+    private BeerOrder beerOrder;
+
+    @ManyToOne
+    private Beer beer;
 }
