@@ -21,17 +21,11 @@ public class BeerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.CHAR)
-    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
+    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false )
     private UUID id;
 
     @Version
     private Long version;
-
-    private String customerRef;
-
-    @JdbcTypeCode(SqlTypes.CHAR)
-    @Column(length = 36, columnDefinition = "varchar(36)")
-    private UUID customerId;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -40,5 +34,12 @@ public class BeerOrder {
     @UpdateTimestamp
     private LocalDateTime lastModifiedDate;
 
-    public boolean isNew() { return this.id == null; }
+    public boolean isNew() {
+        return this.id == null;
+    }
+
+    private String customerRef;
+
+    @ManyToOne
+    private Customer customer;
 }
