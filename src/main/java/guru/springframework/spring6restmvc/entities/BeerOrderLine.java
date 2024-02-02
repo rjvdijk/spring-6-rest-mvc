@@ -12,29 +12,38 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+@AllArgsConstructor
+@Builder
+public class BeerOrderLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.CHAR)
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
-    private String name;
-
-    @Column(length = 255)
-    private String email;
 
     @Version
-    private Integer version;
+    private Long version;
+
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(length = 36, columnDefinition = "varchar(36)")
+    private UUID beerOrderId;
+
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(length = 36, columnDefinition = "varchar(36)")
+    private UUID beerId;
+
+    private Integer orderQuantity;
+    private Integer quantityAllocated;
 
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
     @UpdateTimestamp
-    private LocalDateTime updateDate;
+    private LocalDateTime lastModifiedDate;
+
+    public boolean isNew() { return this.id == null; }
 }
