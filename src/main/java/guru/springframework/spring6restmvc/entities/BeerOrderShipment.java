@@ -12,10 +12,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Builder
 public class BeerOrderShipment {
 
     @Id
@@ -31,6 +31,11 @@ public class BeerOrderShipment {
     private BeerOrder beerOrder;
 
     private String trackingNumber;
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
     @CreationTimestamp
     @Column(updatable = false)
