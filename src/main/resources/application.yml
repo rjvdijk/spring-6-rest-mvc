@@ -15,3 +15,9 @@ spring:
 #              create-source: metadata
 #              create-target: drop-and-create.sql
 #              drop-target: drop-and-create.sql
+  security:
+    user:
+      name: user1
+      password: password
+
+
