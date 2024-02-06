@@ -187,6 +187,13 @@ class BeerControllerIT {
         System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
+    @Test
+    void testNoAuth() throws Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
     @Rollback
     @Transactional
     @Test
