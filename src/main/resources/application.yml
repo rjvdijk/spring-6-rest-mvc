@@ -1,6 +1,7 @@
 logging:
   level:
     guru.springframework: debug
+    org.springframework.security: trace
 
 spring:
   flyway:
