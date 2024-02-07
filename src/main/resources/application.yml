@@ -17,8 +17,7 @@ spring:
 #              create-target: drop-and-create.sql
 #              drop-target: drop-and-create.sql
   security:
-    user:
-      name: user1
-      password: password
-
-
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
