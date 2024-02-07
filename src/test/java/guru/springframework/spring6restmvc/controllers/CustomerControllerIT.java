@@ -6,7 +6,6 @@ import guru.springframework.spring6restmvc.model.CustomerDTO;
 import guru.springframework.spring6restmvc.repositories.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +29,6 @@ class CustomerControllerIT {
 
     @Autowired
     CustomerMapper customerMapper;
-
-    @Value("${spring.security.user.name}")
-    private String username;
-
-    @Value("${spring.security.user.password}")
-    private String password;
 
     @Test
     void testPatchByIdNotFound() {
